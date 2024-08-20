@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    environment:
+      - USE_DOCKER=yes
+      - DJANGO_LOGLEVEL=debug
+      - DJANGO_DEBUG=False
+      - DATABASE_NAME=m999
+      - DATABASE_HOST=18.228.236.239
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=xeubK8BPphUE
+      - SECRET_KEY=''
+      - PORT=5432
+      - TIME_ZONE=UTC
+      - USE_TZ=True
+      - carro:0
+      - maquina:''
+      - n_serie:'
+    ports:
+      - "8080:8000"
