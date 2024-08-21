@@ -1,22 +1,27 @@
-"""
-URL configuration for API project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from rest_framework_simplejwt import views as jwt_views
+from Usuario import urls as users_urls
+from Horimetros import urls as horimeter_urls
+from Alarmes import urls as alarmes_urls
+from Producao import urls as prod_urls
+
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
+
+    # TOKEN DE ACESSO DA API
+    path('api_token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+
+    # URLS DOS HORIMETROS DA API
+    path('api_horimeter/', include(horimeter_urls)),
+    path('api_horimeter/', include(horimeter_urls)),
+
+    # URLS DOS ALARMES DA API
+    path('api_alarmes/', include(alarmes_urls)),
+
+    path("api_producao/", include(prod_urls)),
+
+    path('home/', include(users_urls))
 ]
