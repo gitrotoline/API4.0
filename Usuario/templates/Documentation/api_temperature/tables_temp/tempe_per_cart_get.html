@@ -1,0 +1,53 @@
+{% load i18n %}
+<h2 class="mb-1 mt-2 text-base font-medium px-2">
+    {% trans 'PARÂMETROS DE CONSULTA' %}
+</h2>
+<div class="row">
+    <div class="w-full p-2">
+        <div class="m-1 mb-2">
+           {% trans 'É um endpoint que retorna dados de temperatura por carro, os dados de temperatura são registrados quando o carro está no FORNO. É necessário passar parâmetros como ´número do carro´ (number_cart),  ‘hora de início’ (data_min) e ‘hora de término’ (data_max) para carregar os dados.' %}
+        </div>
+        <hr>
+        <div class="m-1 my-2">
+            <span class="font-medium uppercase text-sm">{% trans 'Exemplo de consulta: ' %}</span>
+            <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
+                 m000-app.rotoline.com/api_temperature/CART1/2024-04-02 00:00&2024-04-02 16:00
+            </div>
+        </div>
+        <hr>
+        <h2 class="mb-2 text-base font-medium px-2 mt-4">
+            {% trans 'ESTRURA DA TABELA TEMPERATURA e RETORNO DA API' %}
+        </h2>
+        <ul class="max-w-md space-y-1 list-none list-inside  px-2">{
+           <li>
+               <span class="text-dark font-bold text-base ml-3">cycle: </span>
+               <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número (ID do ciclo que está sendo realizado e lendo a leitura de TEMPERATURA)' %}</span>
+           </li>
+           <li>
+               <span class="text-dark font-bold text-base ml-3">type: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (sempre retornará (TEMPERATURA))' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">cart: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (retorna o carro consultado, C + {number_cart} = (C1, C2, C3, C4, C5)' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">value: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número (valor de temperatura no FORNO)' %}</span>
+           </li>
+            <li>
+              <span class="text-dark font-bold text-base ml-3">valve_opening: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número (retorna a porcentagem (%0 a 100%) da abertura da válvula no FORNO)' %}</span>
+           </li>
+              <li>
+              <span class="text-dark font-bold text-base ml-3">unit: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (retornará (Cº(Celsius) ou F(Fahrenheit), é a unidade de medida de TEMPERATURA)' %}</span>
+           </li>
+              <li>
+              <span class="text-dark font-bold text-base ml-3">datetime: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (data e hora que foi criado o registro)' %}</span>
+           </li>
+        }
+        </ul>
+</div>
+</div>

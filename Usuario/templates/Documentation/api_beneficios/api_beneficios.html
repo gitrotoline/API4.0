@@ -1,0 +1,35 @@
+{% load i18n %}
+{% block content %}
+
+<div id="valores">
+  <p class="font-semibold text-xl text-dark uppercase">
+      {% trans 'BENEFÍCIOS' %}
+  </p>
+  <p class="font-sans text-sm  my-2">
+     ● <span class="uppercase text-dark font-semibold">{% trans 'ERP (planejamento de recursos empresariais):' %}</span> {% trans 'A API pode ser integrada a sistemas ERP para que os clientes possam gerenciar os dados de produção de forma centralizada.' %}
+  </p>
+  <p class="font-sans text-sm my-2">
+     ● <span class="uppercase text-dark font-semibold">{% trans 'PLANILHAS:' %}</span> {% trans 'A API pode ser integrada a planilhas para que os clientes possam visualizar e analisar os dados de produção de forma rápida e fácil em tempo real.' %}
+  </p>
+  <p class="font-sans text-sm  my-2">
+     ● <span class="uppercase text-dark font-semibold">{% trans 'SISTEMAS DE GESTÃO:' %}</span> {% trans 'A API pode ser integrada a sistemas de gestão para automatizar tarefas e processos.' %}
+  </p>
+  <p class="font-sans text-sm my-2">
+     ● <span class="uppercase text-dark font-semibold">{% trans 'MES (manufacturing execution system):' %}</span> {% trans 'A API pode ser integrada a sistemas MES para fornecer aos clientes uma visão em tempo real da produção e gerar métricas de OEE (Overall Equipment Effectiveness).' %}
+  </p>
+  <p class="font-sans text-sm t my-2">
+      ● <span class="uppercase text-dark font-semibold">{% trans 'SISTEMAS APS:' %}</span> {% trans 'A API pode ser integrada a sistemas APS para ajudar os clientes a otimizar a produção.' %}
+  </p>
+  <p class="font-sans text-sm  my-2">
+      ● <span class="uppercase text-dark font-semibold">{% trans 'REDUÇÃO DE CUSTO:' %}</span> {% trans 'A automatização de tarefas e processos pode otimizar a produção e reduzir custos.' %}
+  </p>
+
+  <p class="font-sans text-base text-dark mb-3 mt-4">
+    <span class="italic text-amber-900 bg-amber-200 border p-1 rounded m-1">
+        {% trans 'Atenção!' %}
+    </span>
+      {% trans 'As integrações dos dados disponibilizados pela RotoAPI 4.0 com outros sistemas' %}  <u class="text-blue-600"> {% trans 'fica totalmente por conta do cliente' %}</u>, {% trans 'vale ressaltar que a Rotoline apenas disponibiliza os dados.' %}
+  </p>
+</div>
+
+{% endblock %}

@@ -1,0 +1,156 @@
+{% load i18n %}
+<h2 class="mb-1 mt-2 text-base font-medium px-2">
+    {% trans 'PARÂMETROS DE CONSULTA' %}
+</h2>
+<div class="row">
+    <div class="w-full p-2">
+        <div class="m-1 mb-2">
+           {% trans 'É um endpoint que retorna dados da linha de tempo da produção. É necessário passar parâmetros como ‘hora de início’ (data_min) e ‘hora de término’ (data_max) para carregar os dados.' %}
+        </div>
+        <hr>
+        <div class="m-1 my-2">
+            <span class="font-medium uppercase text-sm">{% trans 'Exemplo de consulta: ' %}</span>
+            <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
+                m000-app.rotoline.com/api_timeline/2024-04-29%2024-04-30
+            </div>
+        </div>
+        <hr>
+        <h2 class="mb-2 text-base font-medium px-2 mt-4">
+            {% trans 'ESTRURA DA TABELA LINHA DO TEMPO (PRODUÇÃO) e RETORNO DA API' %}
+        </h2>
+        <ul class="max-w-md space-y-1 list-none list-inside  px-2">{
+           <li>
+               <span class="text-dark font-bold text-base ml-3">ciclo: </span>
+               <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número (id de ciclo)' %}</span>
+           </li>
+           <li>
+               <span class="text-dark font-bold text-base ml-3">evento: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (evento que está sendo realizado)' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">carro: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (retorna o carro que realizou o evento, C1, C2, C3, C4 ou C5)' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">datetime: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (data e hora que foi criado o registro)' %}</span>
+           </li>
+        }
+        </ul>
+
+         <p class="my-2 text-dark font-medium text-lg">
+             {% trans 'TAGS RETORNADAS PELA COLUNA EVENTO DA TABELAS' %}
+         </p>
+
+        <ul class="mb-4">
+             <li class="ml-2">
+                <span class="text-dark text-base font-medium">DESCARGA_ON</span>:
+                 <span class="text-blue-700 text-sm italic">{% trans 'Carro está na estação da DESCARGA - SENSOR de POSIÇÃO' %}</span>
+            </li>
+             <li class="mb-2 ml-2">
+               <span class="text-dark text-base font-medium">DESCARGA_OFF</span>:
+                 <span class="text-blue-700 text-sm italic">{% trans 'Carro saiu da estação da DESCARGA - SENSOR de POSIÇÃO' %}</span>
+            </li>
+
+            <li class="ml-2">
+                <span class="text-dark text-base font-medium">CARGA_ON</span>:
+                <span class="text-blue-700 text-sm italic">{% trans 'Carro está na estação da CARGA – SENSOR de POSIÇÃO' %}</span>
+            </li>
+            <li class="mb-2 ml-2">
+                <span class="text-dark text-base font-medium">CARGA_OFF</span>:
+                <span class="text-blue-700 text-sm italic">{% trans 'Carro saiu da estação da CARGA – SENSOR de POSIÇÃO' %}</span>
+            </li>
+
+
+            <li class="ml-2">
+                <span class="text-dark text-base font-medium">RETOMADA_ON</span>:
+                <span class="text-blue-700 text-sm italic">{% trans 'Carro iniciou a RETOMADA' %}</span>
+            </li>
+             <li class="mb-2 ml-2">
+                <span class="text-dark text-base font-medium">RETOMADA_OFF</span>:
+                 <span class="text-blue-700 text-sm italic">{% trans 'Carro finalizou a RETOMADA' %}</span>
+            </li>
+
+            <li class="ml-2">
+                <span class="text-dark text-base font-medium">ACONT1_ON</span>:
+                <span class="text-blue-700 text-sm italic">{% trans 'Carro iniciou o CICLO' %}</span>
+            </li>
+            <li class="mb-2 ml-2">
+               <span class="text-dark text-base font-medium">ACONT1_OFF</span>:
+                <span class="text-blue-700 text-sm italic">{% trans 'Carro finalizou o CICLO' %}</span>
+            </li>
+
+            <li class="ml-2">
+                <span class="text-dark text-base font-medium">ACONT2_ON</span>:
+                <span class="text-blue-700 text-sm italic">{% trans 'Carro iniciou a operação no FORNO' %}</span>
+            </li>
+             <li class="mb-2 ml-2">
+                <span class="text-dark text-base font-medium">ACONT2_OFF</span>:
+                 <span class="text-blue-700 text-sm italic">{% trans 'Carro terminou a operação no FORNO' %}</span>
+            </li>
+
+            <li class="ml-2">
+                <span class="text-dark text-base font-medium">ACONT3_ON</span>:
+                <span class="text-blue-700 text-sm italic">{% trans 'Carro iniciou a operação no PRÉ-RESFRIAMENTO' %}</span>
+            </li>
+            <li class="mb-2 ml-2">
+                <span class="text-dark text-base font-medium">ACONT3_OFF</span>:
+                <span class="text-blue-700 text-sm italic">{% trans 'Carro finalizou a operação no PRÉ-RESFRIAMENTO' %}</span>
+            </li>
+             <li class="ml-2">
+            <span class="text-dark text-base font-medium">ACONT4_ON</span>:
+                 <span class="text-blue-700 text-sm italic">{% trans 'Carro iniciou a operação no RESFRIAMENTO' %}</span>
+        </li>
+         <li class="mb-2 ml-2">
+            <span class="text-dark text-base font-medium">ACONT4_OFF</span>:
+             <span class="text-blue-700 text-sm italic">{% trans 'Carro finalizou a operação no RESFRIAMENTO' %}</span>
+        </li>
+    </ul>
+
+     <p class="my-2 text-dark font-medium text-lg">
+        {% trans 'TAGS DE REDUNDÂNCIA DOS EVENTOS ("ACONT_2", "ACONT_3", "ACONT_4")' %}
+    </p>
+    <ul>
+         <li class="ml-2">
+             <span class="text-dark text-base font-medium">FORNO_ON: </span>
+             <span class="text-blue-700 text-sm italic">{% trans 'Carro está no FORNO - SENSOR de POSIÇÃO' %}</span>
+         </li>
+        <li class="mb-2 ml-2">
+            <span class="text-dark text-base font-medium">FORNO_OFF: </span>
+            <span class="text-blue-700 text-sm italic">{% trans 'Carro saiu do FORNO - SENSOR de POSIÇÃO' %}</span>
+        </li>
+
+        <li class="ml-2">
+            <span class="text-dark text-base font-medium">PRE_RESFRIAMENTO_ON: </span>:
+            <span class="text-blue-700 text-sm italic">{% trans 'Carro está no PRÉ-RESFRIAMENTO – SENSOR de POSIÇÃO' %}</span>
+        </li>
+        <li class="mb-2 ml-2">
+            <span class="text-dark text-base font-medium">PRE_RESFRIAMENTO_OFF: </span>
+            <span class="text-blue-700 text-sm italic">{% trans 'Carro saiu do PRÉ-RESFRIMENTO – SENSOR de POSIÇÃO' %}</span>
+        </li>
+
+        <li class="ml-2">
+            <span class="text-dark text-base font-medium">RESFRIAMENTO_ON: </span>
+            <span class="text-blue-700 text-sm italic">{% trans 'Carro está no RESFRIAMENTO- SENSOR de POSIÇÃO' %}</span>
+        </li>
+        <li class="mb-2 ml-2">
+            <span class="text-dark text-base font-medium">RESFRIAMENTO_OFF: </span>
+            <span class="text-blue-700 text-sm italic">{% trans 'Carro saiu do RESFRIAMENTO - SENSOR de POSIÇÃO' %}</span>
+        </li>
+    </ul>
+
+     <p class="my-2 text-dark font-medium text-lg uppercase">
+        {% trans 'TAGS exclusivas das máquinas SHUTTLE (DC)' %}
+     </p>
+     <ul>
+        <li class="ml-2">
+            <span class="text-dark text-base font-medium">PRE_AQUECIMENTO_ON: </span>
+            <span class="text-blue-700 text-sm italic">{% trans 'inicia o aquecimento do FORNO - Aquecimento de molde com material/sem material' %}</span>
+        </li>
+        <li class="mb-2 ml-2">
+            <span class="text-dark text-base font-medium">PRE_AQUECIMENTO_OFF: </span>
+            <span class="text-blue-700 text-sm italic">{% trans 'finaliza o aquecimento do FORNO - Aquecimento de molde com material/sem material' %}</span>
+        </li>
+    </ul>
+</div>
+</div>

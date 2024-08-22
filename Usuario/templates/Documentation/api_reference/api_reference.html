@@ -1,0 +1,23 @@
+{% load i18n %}
+{% block content %}
+<div id="intro">
+    <div class="col my-2">
+          <br>
+          <p class="font-semibold text-xl text-dark uppercase">{% trans 'Introdução' %}</p>
+          <p class="font-sans text-base text-gray-700 my-2">
+              {% trans 'A RotoAPI 4.0 é uma solução que oferece uma forma fácil de obter os dados da sua máquina Rotoline.' %}
+              {% trans 'Com o propósito de viabilizar e disponibilizar essas informações para possíveis integração aos sistemas de gestão, ERPs, relátorios, entre outras soluções.' %}
+              {% trans 'Neste contexto, a integração desses dados promove uma gestão mais eficiente e estratégica, permitindo a' %}
+              {% trans 'otimização dos seus processos, maximização dos seus resultados e possíveis prevenções futuras.' %}
+          </p>
+          <p class="font-sans text-sm text-dark bg-blue-100 p-2 mt-3">
+              <span class="text-blue-600-500"><i class='bx bx-info-circle bx-xs'></i></span>
+               {% trans "A RotoAPI 4.0 é uma API REST, que permite vários tipos de manipulações (métodos) de dados via protocolo HTTP's, entre eles:" %} <br><br>
+              <span class="text-dark text-base font-semibold">GET</span>: {% trans 'Método GET permite consultar os dados' %};<br>
+              <span class="text-dark text-base font-semibold">POST</span>: {% trans 'Método POST permite criar novos registros' %};<br>
+              <span class="text-dark text-base font-semibold">PUT</span>: {% trans 'Método PUT permite editar os registros.' %}
+          </p>
+    </div>
+    <br>
+</div>
+{% endblock %}

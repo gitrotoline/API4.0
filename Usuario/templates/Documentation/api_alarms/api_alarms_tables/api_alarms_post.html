@@ -1,0 +1,186 @@
+{% load i18n %}
+
+<h2 class="mb-1 mt-2 text-base font-medium px-2">
+    {% trans 'PARÂMETROS DE CONSULTA' %}
+</h2>
+<div class="row">
+    <div class="w-full p-2">
+        <div class="m-1 mb-2">
+             {% trans 'Esse endpoint retorna os alarmes que são acionados durante a produção da máquina.' %}
+             {% trans 'É necessário passar o parâmetro de consulta com data inicial (date_min) e data final (date_max).' %}
+        </div>
+        <hr>
+        <div class="m-1 my-2">
+            <span class="font-medium uppercase text-sm">{% trans 'Exemplo de consulta:' %}</span>
+            <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
+                m000-app.rotoline.com/api_alarmes/2023-04-06 10:00&2023-04-06 16:00
+            </div>
+        </div>
+        <hr>
+        <h2 class="mb-2 text-base font-medium px-2 mt-4">
+           {% trans 'ESTRURA DA TABELA ALARMES e RETORNO DA API' %}
+        </h2>
+        <ul class="max-w-md space-y-1 list-none list-inside  px-2">{
+           <li>
+               <span class="text-dark font-bold text-base ml-3">eventid: </span>
+               <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+           </li>
+           <li>
+               <span class="text-dark font-bold text-base ml-3">Machineid: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">Eventtype: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">Sourcename: </span>
+             <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">Sourcepath: </span>
+              <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+           </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Sourceid: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Servername: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Tickstimestamp: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Eventtimestamp: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                 <span class="text-dark font-bold text-base ml-3">Eventcategory: </span>
+                  <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Severity: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Priority: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número' %}</span>
+            </li>
+            <li>
+               <span class="text-dark font-bold text-base ml-3">Message: </span>
+               <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Conditionname: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Subconditionname: </span>
+               <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Alarmclass: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Active: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+               <span class="text-dark font-bold text-base ml-3">Acked: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número' %}</span>
+            </li>
+            <li>
+              <span class="text-dark font-bold text-base ml-3">Effdisabled: </span>
+               <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Disabled: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Effsuppressed: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Suppressed: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Personid: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Changemask: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Inputvalue: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número' %}</span>
+            </li>
+            <li>
+                 <span class="text-dark font-bold text-base ml-3">Limitvalue: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número' %}</span>
+            </li>
+            <li>
+                 <span class="text-dark font-bold text-base ml-3">Quality: </span>
+                  <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Eventassociationid: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Usercomment: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Computerid: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Tag1value: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Tag2value: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Tag3value: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Tag4value: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Shelved: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">Autounshelvetime: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (Data e hora em que a leitura foi registrada)' %}</span>
+            </li>
+            <li>
+               <span class="text-dark font-bold text-base ml-3">Grouppath: </span>
+               <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+               <span class="text-dark font-bold text-base ml-3">Messageid: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">datetime: </span>
+                 <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (Data e hora em que a leitura foi registrada)' %}</span>
+            </li>
+        }
+        </ul>
+    </div>
+</div>
+
+
+

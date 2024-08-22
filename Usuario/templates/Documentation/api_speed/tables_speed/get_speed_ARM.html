@@ -1,0 +1,54 @@
+{% load i18n %}
+<h2 class="mb-1 mt-2 text-base font-medium px-2">
+    {% trans 'PARÂMETROS DE CONSULTA' %}
+</h2>
+<div class="row">
+    <div class="w-full p-2">
+        <div class="m-1 mb-2">
+             {% trans "Esse endpoint retorna dados de velocidade(BRAÇO). É necessário passar parâmetros como 'número do braço' (number_arm), ‘hora de início’ (data_min) e ‘hora de término’ (data_max) para consultar os dados." %}
+        </div>
+        <hr>
+        <div class="m-1 my-2">
+            <span class="font-medium uppercase text-sm">{% trans 'Exemplo de consulta: ' %}</span>
+            <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
+                - m000-app.rotoline.com/api_speed/ARM1/2023-04-02 00:00&2023-04-02 16:00
+            </div>
+        </div>
+        <hr>
+        <h2 class="mb-2 text-base font-medium px-2 mt-4">
+            {% trans 'ESTRURA DA TABELA VELOCIDADE e RETORNO DA API' %}
+        </h2>
+        <ul class="max-w-md space-y-1 list-none list-inside  px-2">{
+           <li>
+               <span class="text-dark font-bold text-base ml-3">cycle: </span>
+               <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número (id do ciclo que está sendo realizado e leitura da velocidade)' %}</span>
+           </li>
+           <li>
+               <span class="text-dark font-bold text-base ml-3">type: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (sempre retornará (SPEED))' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">cart: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (Carro que está lendo a velocidade (C1, C2, C3, C4, C5))' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">sensor: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (ARM + number_arm, (ARM1, ARM2, ARM3, ARM4 or ARM5))' %}</span>
+           </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">value_hz: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (valor em HERTZ da velocidade)' %}</span>
+            </li>
+            <li>
+                <span class="text-dark font-bold text-base ml-3">value_rpm: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (valor em RPM (ROTAÇÃO POR MINUTO) da velocidade)' %}</span>
+            </li>
+              <li>
+                <span class="text-dark font-bold text-base ml-3">datetime: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (Data e hora em que a leitura foi registrada)' %}</span>
+            </li>
+        }
+
+        </ul>
+    </div>
+</div>

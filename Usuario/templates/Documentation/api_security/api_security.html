@@ -1,0 +1,22 @@
+{% load i18n %}
+{% block content %}
+<div id="seguranca">
+  <p class="font-semibold text-xl text-dark uppercase">{% trans 'Segurança' %}</p>
+  <p class="font-sans text-sm text-dark mt-2 italic">
+    {% trans 'A segurança é um aspecto fundamental da ROTOAPI4.0 Os dados são armazenados no banco de dados RDS Amazon, que oferece um alto nível de segurança.' %}
+  </p>
+  <p class="font-sans text-sm  mt-2">
+      ● <span class="text-dark uppercase font-semibold">{% trans 'Autenticação e autorização' %}</span>: {% trans 'O acesso aos dados é restrito a usuários autorizados.' %}
+  </p>
+  <p class="font-sans text-sm  mt-2">
+      ● <span class="text-dark uppercase font-semibold">{% trans 'Criptografia' %}</span>: {% trans 'Os dados são criptografados em repouso e em trânsito.' %}
+  </p>
+  <p class="font-sans text-sm mt-2">
+      ● <span class="text-dark uppercase font-semibold">{% trans 'Backup e recuperação:' %}</span> {% trans 'Os dados são protegidos contra perda.' %}
+  </p>
+  <p class="font-sans text-sm mt-2">
+      ● <span class="text-dark uppercase font-semibold">{% trans 'Auditoria' %}</span>: {% trans 'Às alterações nos dados são rastreáveis.' %}
+  </p>
+</div>
+
+{% endblock %}

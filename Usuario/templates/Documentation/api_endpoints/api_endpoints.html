@@ -1,0 +1,58 @@
+{% load i18n %}
+{% block content %}
+<p class="font-semibold text-xl text-dark uppercase">{% trans 'Endpoints' %}</p>
+<p class="font-sans text-base text-dark mt-4">{% trans 'Segue alguns endpoints liberados para consulta na API:' %}</p>
+<div class="font-sans mt-2 flex items-center">
+    <i class='bx bxs-bell-ring bg-red-600 text-white p-2 rounded-lg text-2xl'></i>
+    <div class="ml-4">
+        <p class="text-dark font-semibold">{% trans 'ALARMES' %}</p>
+        <p>{% trans 'Retorna os alarmes da máquina.' %}</p>
+    </div>
+</div>
+<div class="font-sans mt-2 flex items-center">
+    <i class='bx bx-cog bg-green-600 text-white p-2 rounded-lg text-2xl'></i>
+    <div class="ml-4">
+        <p class="text-dark font-semibold">{% trans 'PRODUÇÃO' %}</p>
+        <p>{% trans 'Retorna o relatório de dados do ciclo da máquina (relatório resumido), retorna dados como duração do ciclo, tempo do forno, etc.' %}</p>
+    </div>
+</div>
+
+<div class="font-sans mt-2 flex items-center">
+    <i class='bx bx-tachometer bg-amber-600 text-white p-2 rounded-lg text-2xl'></i>
+    <div class="ml-4">
+        <p class="text-dark font-semibold">{% trans 'HORÍMETROS' %}</p>
+        <p>{% trans 'Retorna os dados do horímetro da máquina. (Tempo de funcionamento dos equipamentos das máquinas)' %}</p>
+    </div>
+</div>
+
+<div class="font-sans mt-2 flex items-center">
+    <i class='bx bx-receipt bg-red-600 text-white p-2 rounded-lg text-2xl'></i>
+    <div class="ml-4">
+        <p class="text-dark font-semibold">{% trans 'RECEITAS' %}</p>
+        <p>{% trans 'Retorna as receitas.' %}</p>
+    </div>
+</div>
+
+<div class="font-sans mt-2 flex items-center">
+    <i class='bx bxs-bell-ring bg-purple-600 text-white p-2 rounded-lg text-2xl'></i>
+    <div class="ml-4">
+        <p class="text-dark font-semibold">{% trans 'SENSORES' %}</p>
+        <p>{% trans 'Retorna os sensores que são acionados (ocorrem) na máquina.' %}</p>
+    </div>
+</div>
+
+<div class="font-sans mt-2 flex items-center">
+    <i class='bx bx-stopwatch bg-red-600 text-white p-2 rounded-lg text-2xl'></i>
+    <div class="ml-4">
+        <p class="text-dark font-semibold">{% trans 'LINHA DO TEMPO (TIMELINE)' %}</p>
+        <p>{% trans 'Retorna cada etapa do ciclo em tempo real - (carregamento, forno, resfriamento, pré-resfriamento e descarregamento).. Qual carro está na etapa e o horário de início da etapa, em um formato de linha do tempo conforme elas ocorrem.' %}</p>
+    </div>
+</div>
+<br>
+<p class="font-sans text-base text-gray-700 mt-2">
+   {% trans 'O acesso é concedido ao fazer login no aplicativo com as seguintes credenciais (NOME DE USUÁRIO e SENHA) e após obter o token, a resposta na requisição deve ser:' %}
+</p>
+<p class="font-sans text-sm text-gray-700 mt-2">
+  ● <span class="text-blue-600 cursor-pointer">{% trans 'ACCESS TOKEN' %}</span>: {% trans 'Token de acesso para consultas à API por meio de serviços que realizam essa operação ou por meio de um script desenvolvido para consultar este ponto de extremidade. Este token tem uma duração de 24 horas.' %}
+</p>
+{% endblock %}

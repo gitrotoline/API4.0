@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import list_horimeter, HorimeterCreate, list_horimeter_per_machine_and_name, update_horimeter_per_machine_and_name
 
+
 urlpatterns = [
     path('', list_horimeter, name='list_horimeter'),
     path('<str:machine>&<str:name>', list_horimeter_per_machine_and_name, name='horimeter_per_machine_and_name'),

@@ -1,0 +1,53 @@
+{% load i18n %}
+<h2 class="mb-1 mt-2 text-base font-medium px-2">
+    {% trans 'PARÂMETROS DE CONSULTA' %}
+</h2>
+
+<div class="row">
+    <div class="w-full p-2">
+        <div class="m-1 mb-2">
+            {% trans 'Esse endpoint retorna dados da linha do tempo de produção (redundância).' %}
+            {% trans 'É necessário passar parâmetros como ‘hora de início’ (data_min) e ‘hora de término’ (data_max) para consultar os dados.' %}
+        </div>
+        <hr>
+        <div class="m-1 my-2">
+            <span class="font-medium uppercase text-sm">
+                {% trans 'Exemplo de consulta: ' %}
+            </span>
+            <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
+                m000-app.rotoline.com/api_timeline_sensor/2024-04-29&2024-04-30
+            </div>
+        </div>
+
+        <hr>
+
+        <h2 class="mb-2 text-base font-medium px-2 mt-4">
+            {% trans 'ESTRURA DA TABELA LINHA DO TEMPO SENSORES e RETORNO DA API' %}
+        </h2>
+
+        <ul class="max-w-md space-y-1 list-none list-inside px-2">{
+           <li>
+                <span class="text-dark font-bold text-base ml-3">ciclo: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número (número do ciclo)' %}</span>
+           </li>
+           <li>
+               <span class="text-dark font-bold text-base ml-3">evento: </span>
+               <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (evento que o carro está realizando)' %}</span>
+           </li>
+           <li>
+               <span class="text-dark font-bold text-base ml-3">carro: </span>
+               <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (carro que realizou o evento, C1, C2, C3, C4 ou C5)' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">status: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'boleano (indica o status do evento 0(false) = OFF e 1(true) = ON' %}</span>
+           </li>
+           <li>
+                <span class="text-dark font-bold text-base ml-3">datetime: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (retorna a data e hora que foi registrado)' %}</span>
+           </li>
+        }
+        </ul>
+    </div>
+</div>
+

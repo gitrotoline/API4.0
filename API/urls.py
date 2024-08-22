@@ -5,23 +5,62 @@ from Usuario import urls as users_urls
 from Horimetros import urls as horimeter_urls
 from Alarmes import urls as alarmes_urls
 from Producao import urls as prod_urls
+from Receitas import urls as recipes_urls, urls_recipe_data as recipe_data_urls
+from Timeline import urls as timeline_urls, urls_timeline_clp as timeline_clp_urls
+from Temperatura import urls as temp_urls
+from Corrente import urls as amps_urls
+from Rwtc import urls as rwtc_urls
+from Sensor import urls as sensor_urls
+from Velocidade import urls as speed_urls
+from Status import urls as status_machine
+from Usuario import views as v_doc
 
 
 urlpatterns = [
+    # URL Translate
+    path('i18n/', include('django.conf.urls.i18n')),
 
-    path('admin/', admin.site.urls),
+    # URL Documentation
+    path('<str:machine>', v_doc.documentation, name="documentation"),
+
+    path('home/', include(users_urls)),
+    path('admin_secret_karaio_adivinha_ai_otario_renigth_fora_plmr_de_Dios/', admin.site.urls),
 
     # TOKEN DE ACESSO DA API
-    path('api_token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api_token/<str:machine>/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
 
     # URLS DOS HORIMETROS DA API
-    path('api_horimeter/', include(horimeter_urls)),
-    path('api_horimeter/', include(horimeter_urls)),
+    path('api_horimeter/<str:machine>/', include(horimeter_urls)),
 
     # URLS DOS ALARMES DA API
-    path('api_alarmes/', include(alarmes_urls)),
+    path('api_alarmes/<str:machine>/', include(alarmes_urls)),
 
-    path("api_producao/", include(prod_urls)),
+    # URLS DADOS DA PRODUCAO (RELATORIO RESUMIDO)
+    path("api_producao/<str:machine>/", include(prod_urls)),
 
-    path('home/', include(users_urls))
+    # URLS DAS RECEITAS E  # URLS DAS RECEITAS DADOS
+    path("api_receitas/<str:machine>/", include(recipes_urls)),
+    path("api_receitas_dados/<str:machine>/", include(recipe_data_urls)),
+
+    # URLS DA TIMELINE
+    path("api_timeline/<str:machine>/", include(timeline_urls)),
+    path("api_timeline_sensor/<str:machine>/", include(timeline_clp_urls)),
+
+    # URLS DA TEMPERATURA
+    path("api_temperature/<str:machine>/", include(temp_urls)),
+    path('api_eletric_amps/<str:machine>/', include(amps_urls)),
+    path('api_rwtc/<str:machine>/', include(rwtc_urls)),
+
+    # URLS SENSORES
+    path("api_sensor/<str:machine>/", include(sensor_urls)),
+
+    # URL DE VELOCIDADE
+    path('api_speed/<str:machine>/', include(speed_urls)),
+
+    # URL QUE MOSTRA STATUS DA MAQUINA
+    path('api_status/<str:machine>/', include(status_machine)),
+
 ]
+
+handler404 = 'Usuario.views.handler404'
+handler500 = 'Usuario.views.handler500'

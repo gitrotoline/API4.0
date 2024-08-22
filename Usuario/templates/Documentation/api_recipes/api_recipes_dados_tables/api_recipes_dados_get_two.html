@@ -1,0 +1,46 @@
+{% load i18n %}
+<h2 class="mb-1 mt-2 text-base font-medium px-2">
+    {% trans 'PARÂMETROS DE CONSULTA' %}
+</h2>
+<div class="row">
+    <div class="w-full p-2">
+        <div class="m-1 mb-2">
+            {% trans 'Esse endpoint retorna dados da receita por recipeID. É necessário passar o parâmetro de recipeID (id de referência da receita).' %}
+        </div>
+        <hr>
+        <div class="m-1 my-2">
+            <span class="font-medium uppercase text-sm">{% trans 'Exemplo de consulta:' %} </span>
+            <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
+                m000-app.rotoline.com/api_receitas_dados/2
+            </div>
+        </div>
+
+        <hr>
+        <h2 class="mb-2 text-base font-medium px-2 mt-4">
+            {% trans 'ESTRURA DA TABELA RECEITAS e RETORNO DA API' %}
+        </h2>
+        <ul class="max-w-md space-y-1 list-none list-inside  px-2">{
+           <li>
+               <span class="text-dark font-bold text-base ml-3">id: </span>
+               <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número (número do id do registro)' %}</span>
+           </li>
+           <li>
+               <span class="text-dark font-bold text-base ml-3">evento: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (nome do evento da receita)' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">valor: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (valor do evento da receita)' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">datetime:  </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (data e hora que foi criado o registro)' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">recipeID: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número (id de referência da receita vinculada)' %}</span>
+           </li>
+        }
+        </ul>
+    </div>
+</div>

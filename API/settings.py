@@ -6,21 +6,17 @@ from django.utils.translation import gettext_lazy as _
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-w*v^y5uu%x8=**9qorpl8a!slr6q8xi*bdjp61_duducb23u$)'
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', True)
+DEBUG = os.getenv('DEBUG', False)
 ALLOWED_HOSTS = ['*']
 INTERNAL_IPS = ['127.0.0.1']
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -28,10 +24,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'Horimetros',
     "Usuario",
     "Alarmes",
-    "Producao"
+    "Producao",
+    "Receitas",
+    "Timeline",
+    "Temperatura",
+    "Corrente",
+    "Rwtc",
+    "Sensor",
+    "Velocidade",
+    "Status"
 ]
 
 MIDDLEWARE = [
@@ -77,7 +82,33 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': 3333,
     },
+    'TESTE': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'TESTE',
+        'USER': 'RotoAPI',
+        'PASSWORD': '6D&W!E3p7dNvAjM',
+        'HOST': 'localhost',
+        'PORT': 3333,
+    },
+    'M442': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'M442',
+        'USER': 'RotoAPI',
+        'PASSWORD': '6D&W!E3p7dNvAjM',
+        'HOST': 'localhost',
+        'PORT': 3333,
+    },
+    'M365': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'M365',
+        'USER': 'RotoAPI',
+        'PASSWORD': '6D&W!E3p7dNvAjM',
+        'HOST': 'localhost',
+        'PORT': 3333,
+    },
 }
+
+
 
 
 
@@ -126,6 +157,11 @@ USE_L10N = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+# Static
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 STATIC_URL = '/static/'
 #
 # LOGIN_URL = 'login'

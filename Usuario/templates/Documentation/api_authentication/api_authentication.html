@@ -1,0 +1,24 @@
+{% load i18n %}
+{% block content %}
+<div id="auth">
+    <p class="font-semibold text-xl text-dark uppercase">{% trans 'Autenticação' %}</p>
+    <p class="font-sans text-base text-gray-700 mt-2">
+      {% trans 'Para acessar os endpoints é preciso se autenticar no endpoint api_token usando o método POST, passando como parâmetro seu usuário e senha.' %}
+      {%  trans "Após obter o token é possível acessar os demais endpoints apenas passando o token de autenticação no corpo da solicitação HTTP's." %}
+    </p>
+
+    <p class="font-sans text-sm mt-3 text-dark">{% trans 'Segue o exemplo abaixo, usando o protocolo Curl:' %}</p>
+    <div class="p-2 max-w-lg bg-gray-100 rounded-md shadow-lg flex items-center space-x-4 mt-4 mb-5">
+          <div>
+              <div class="text-base font-medium text-black">Curl -X <span class="text-green-600">'POST'</span> \ </div>
+              <div class="text-base font-medium text-green-600 px-5">'https://yourmachine-app.rotoline.com/api_token/'</div>
+              <div class="text-base font-medium text-black px-5">-H <span class="text-green-600">'Content-Type: application/json'</span> \ </div>
+              <div class="text-base font-medium text-black px-5">-d <span class="text-green-600">' {</span></div>
+              <div class="text-base font-medium text-green-600 px-5">"username": "string",</div>
+              <div class="text-base font-medium text-green-600 px-5">"password": "string",</div>
+              <div class="text-base font-medium text-green-600">}'</div>
+          </div>
+    </div>
+</div>
+
+{% endblock %}

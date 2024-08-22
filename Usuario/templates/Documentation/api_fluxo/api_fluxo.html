@@ -1,0 +1,17 @@
+{% load i18n %}
+
+{% block content %}
+<div id="fluxo">
+    <p class="font-semibold text-xl text-dark uppercase">{% trans 'Fluxograma dos Dados' %}</p>
+    <p class="font-sans text-base text-gray-600 mt-2">
+        {% trans 'Segue o fluxograma que descreve o fluxo dos dados e algumas possibilidades de integração, utilizando a RotoAPI 4.0.' %}
+    </p>
+    {% if lang == "pt-br" %}
+        <img src="https://www.rotoline.com/wp-content/uploads/2024/03/Sistema-da-API.png" class="mt-2 m-4" width="800px" height="800px" alt="img">
+    {% elif lang == "en" %}
+        <img src="https://www.rotoline.com/wp-content/uploads/2024/03/sistema-api-ingles.png" class="mt-2 m-4" width="800px" height="800px" alt="img">
+    {% else %}
+        <img src="https://www.rotoline.com/wp-content/uploads/2024/03/sistema-api-espanhol.png" class="mt-2 m-4" width="800px" height="800px" alt="img">
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% load i18n %}
+<h2 class="mb-1 mt-2 text-base font-medium px-2">
+    {% trans 'PARAMETROS DE CRIAÇÃO' %}
+</h2>
+<div class="row">
+    <div class="w-full p-2">
+        <div class="m-1 mb-2">
+            {% trans 'Esse endpoint é para gerar um token de acesso da API, esse token permite o acesso aos demais endpoints da API.' %}
+            {% trans  'O token tem validade de 24 horas e é preciso passar o usuário e senha para obter o token.' %}
+        </div>
+        <hr>
+        <div class="m-1 my-2">
+            <span class="font-medium uppercase text-sm">{% trans 'Exemplo de criação: ' %} </span>
+            <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
+                m000-app.rotoline.com/api_token/
+            </div>
+        </div>
+        <hr>
+        <h2 class="mb-2 text-base font-medium px-2 mt-4">
+           {% trans "ESTRURA DA TABELA TOKEN e O CORPO DA SOLICITAÇÃO HTTP's" %}
+
+        </h2>
+        <ul class="max-w-md space-y-1 list-none list-inside  px-2">{
+           <li>
+               <span class="text-dark font-bold text-base ml-3">username: </span>
+               <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (nome do seu usuário)' %}</span>
+           </li>
+           <li>
+               <span class="text-dark font-bold text-base ml-3">password: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (sua senha de acesso a API)' %}</span>
+           </li>
+        }
+        </ul>
+
+    </div>
+</div>
+
+
+
+

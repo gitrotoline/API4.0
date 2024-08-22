@@ -1,0 +1,38 @@
+{% load i18n %}
+<div class="row">
+    <div class="w-full p-2">
+        <div class="m-1 mb-2">
+             {% trans 'Esse endpoint é para atualizar um dado da receita, essa atualização é feita pela recipeID(id de referência da receita) e o evento da receita.' %}
+        </div>
+        <hr>
+        <div class="m-1 my-2">
+            <span class="font-medium uppercase text-sm">{% trans 'Exemplo de atualização:' %} </span>
+            <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
+                m000-app.rotoline.com/api_receitas_dados/update/2&oventime_step1
+            </div>
+        </div>
+        <hr>
+        <h2 class="mb-2 text-base font-medium px-2 mt-4">
+             {% trans "ESTRUTURA PARA ENVIAR NO CORPO DA SOLICITAÇÃO HTTP's (Método PUT)" %}
+        </h2>
+        <ul class="max-w-md space-y-1 list-none list-inside  px-2">{
+           <li>
+               <span class="text-dark font-bold text-base ml-3">evento: </span>
+               <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (nome do evento da receita)' %}</span>
+           </li>
+           <li>
+               <span class="text-dark font-bold text-base ml-3">valor: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (valor atribuído ao evento)' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">recipeID: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número (id de referência da receita)' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">datetime: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (data e hora que o registro foi gravado)' %}</span>
+           </li>
+        }
+        </ul>
+    </div>
+</div>

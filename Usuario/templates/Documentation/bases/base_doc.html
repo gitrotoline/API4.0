@@ -1,0 +1,143 @@
+{% load i18n %}
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/png" href="https://www.rotoline.com/wp-content/uploads/2020/10/cropped-favicon-2-180x180.png">
+    <title>{% trans 'RotoAPI 4.0 - Documentação' %}</title>
+</head>
+
+<body>
+    <div class="flex flex-col sm:flex-row h-screen w-full">
+        <aside class="w-60	relative z-0 flex-shrink-0 hidden px-4 overflow-y-auto bg-gray-100 md:block ">
+            <div class="mb-6">
+                <!-- Start Navitem -->
+                <ul class="space-y-2 mt-6">
+                    <p class="font-sans font-semibold uppercase text-xl text-dark px-4">{% trans 'Iniciar' %}</p>
+                          <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#intro" class="font-medium text-base text-gray-700 px-4 text-dark">
+                                  <span>{% trans 'Introdução' %}</span>
+                              </a>
+                          </li>
+                          <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#fluxo" class="font-medium text-base text-gray-700 px-4 text-dark">
+                                  <span>{% trans 'Fluxograma dos dados' %}</span>
+                              </a>
+                          </li>
+                          <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#valores" class="font-medium text-base text-gray-700 px-4 text-dark">
+                                  <span>{% trans 'Beneficios' %}</span>
+                              </a>
+                          </li>
+                          <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#seguranca" class="font-medium text-base text-gray-700 px-4 text-dark">
+                                  <span>{% trans 'Segurança' %}</span>
+                              </a>
+                          </li>
+                          <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#auth" class="font-medium text-base text-gray-700 px-4 text-dark">
+                                  <span>{% trans 'Autenticação' %}</span>
+                              </a>
+                          </li>
+
+                          <p class="font-sans font-semibold uppercase text-xl text-dark px-4 mt-5 pt-5">{% trans 'Endpoints' %}</p>
+
+                          <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#token" class="font-medium text-base text-gray-700 px-4">
+                                  <span>Token</span>
+                              </a>
+                          </li>
+                          <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#alarmes" class="font-medium text-base text-gray-700 px-4">
+                                  <span>{% trans 'Alarmes' %}</span>
+                              </a>
+                          </li>
+                          <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#producao" class="font-medium text-base text-gray-700 px-4">
+                                  <span>{% trans 'Produção' %}</span>
+                              </a>
+                          </li>
+                           <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#receitas" class="font-medium text-base text-gray-700 px-4">
+                                  <span>{% trans 'Receitas' %}</span>
+                              </a>
+                          </li>
+                          <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#receitasD" class="font-medium text-sm text-gray-700 px-4">
+                                  <span>● {% trans 'Receitas Dados' %}</span>
+                              </a>
+                          </li>
+                            <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#time" class="font-medium text-base text-gray-700 px-4">
+                                  <span>{% trans 'Linha do Tempo' %}</span>
+                              </a>
+                          </li>
+                         <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#timeS" class="font-medium  text-sm text-gray-700 px-4">
+                                  <span>● {% trans 'Linha do tempo sensor' %}</span>
+                              </a>
+                          </li>
+                          <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#temp" class="font-medium text-base text-gray-700 px-4">
+                                  <span>{% trans 'Temperatura' %}</span>
+                              </a>
+                          </li>
+                           <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#eletric_amps" class="font-medium text-base text-gray-700 px-4">
+                                  <span>{% trans 'Corrente Elétrica' %}</span>
+                              </a>
+                          </li>
+
+                         <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#speed" class="font-medium text-base text-gray-700 px-4">
+                                  <span>{% trans 'Velocidade' %}</span>
+                              </a>
+                          </li>
+
+                        <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#rwtc" class="font-medium text-base text-gray-700 px-4">
+                                  <span>RWTC</span>
+                              </a>
+                          </li>
+
+                          <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#horimetros" class="font-medium text-base text-gray-700 px-4">
+                                  <span>{% trans 'Horímetros' %}</span>
+                              </a>
+                          </li>
+                          <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#horimetrosR" class="font-medium text-sm text-gray-700 px-4">
+                                  <span>● {% trans 'Horimetros Reset' %}</span>
+                              </a>
+                          </li>
+                          <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#sensor" class="font-medium text-base text-gray-700 px-4">
+                                  <span>{% trans 'Sensores' %}</span>
+                              </a>
+                          </li>
+                          <li class="hover:bg-gray-200 cursor-pointer">
+                              <a href="#status" class="font-medium text-base text-gray-700 px-4">
+                                  <span>{% trans 'Status da API' %}</span>
+                              </a>
+                          </li>
+                      </ul>
+              <!--End Sidebar for open menu -->
+            </div>
+        </aside>
+        <!-- End Open Menu -->
+
+        <!-- End Sidebar -->
+        <div class="flex flex-col flex-1 w-full overflow-y-auto relative z-0 flex-1 pb-8 px-6 bg-white">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </div>
+</body>

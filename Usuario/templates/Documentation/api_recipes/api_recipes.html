@@ -1,0 +1,119 @@
+{% load i18n %}
+{% block content %}
+<div id="receitas">
+    <p class="font-sans text-xl text-dark my-4">{% trans 'RECEITAS' %}</p>
+    <div class='cursor-pointer p-1 bg-sky-100 rounded-md shadow-lg mb-5 border border-sky-500' x-data="{ reportsOpen: false }">
+        <div class='mx-auto space-y-1'>
+            <div @click="reportsOpen = !reportsOpen" class='flex items-center text-gray-600 w-full overflow-hidden'>
+                <p class="font-sans font-semibold text-base m-4">
+                    <span class="bg-sky-400 text-white rounded-md p-2">GET</span>
+                </p>
+                <div class='flex items-center text-dark font-sans font-semibold text-lg w-full'>
+                    <!-- Mostrar apenas em telas pequenas -->
+                    <button class="hover:underline sm:hidden">{% trans 'Consultar' %}</button>
+                    <!-- Mostrar em telas médias e grandes -->
+                    <button class="hover:underline hidden sm:block">/api_receitas/</button>
+                    <div class='ml-auto flex items-center'>
+                        <div class="row flex items-center justify-between">
+                            <!-- Mostrar apenas em telas médias e grandes -->
+                            <p class="text-xs mr-2 hidden lg:block">{% trans 'Consultar receitas' %}</p>
+                            <svg width="20" height="10" viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+                                <line x1="0" y1="0" x2="10" y2="10" stroke="#9CA3AF" />
+                                <line x1="20" y1="0" x2="10" y2="10" stroke="#9CA3AF" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-300" x-cloak x-show="reportsOpen">
+              {% include 'Documentation/api_recipes/api_recipes_tables/api_recipes_get.html' %}
+            </div>
+        </div>
+    </div>
+     <div class='cursor-pointer p-1 bg-sky-100 rounded-md shadow-lg mb-5 border border-sky-500' x-data="{ reportsOpen: false }">
+        <div class='mx-auto space-y-1'>
+            <div @click="reportsOpen = !reportsOpen" class='flex items-center text-gray-600 w-full overflow-hidden'>
+                <p class="font-sans font-semibold text-base m-4">
+                    <span class="bg-sky-400 text-white rounded-md p-2">GET</span>
+                </p>
+                <div class='flex items-center text-dark font-sans font-semibold text-lg w-full'>
+                    <!-- Mostrar apenas em telas pequenas -->
+                    <button class="hover:underline sm:hidden">{% trans 'Consultar' %}</button>
+                    <!-- Mostrar em telas médias e grandes -->
+                    <button class="hover:underline hidden sm:block">/api_receitas/{recipeID}</button>
+                    <div class='ml-auto flex items-center'>
+                        <div class="row flex items-center justify-between">
+                            <!-- Mostrar apenas em telas médias e grandes -->
+                            <p class="text-xs mr-2 hidden lg:block">{% trans 'Consultar receitas por recipeID' %}</p>
+                            <svg width="20" height="10" viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+                                <line x1="0" y1="0" x2="10" y2="10" stroke="#9CA3AF" />
+                                <line x1="20" y1="0" x2="10" y2="10" stroke="#9CA3AF" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-300" x-cloak x-show="reportsOpen">
+              {% include 'Documentation/api_recipes/api_recipes_tables/api_recipes_get_two.html' %}
+            </div>
+        </div>
+    </div>
+    <div class='cursor-pointer p-1 bg-green-100 rounded-md shadow-lg mb-5 border border-green-500' x-data="{ reportsOpen: false }">
+        <div class='mx-auto space-y-1'>
+            <div @click="reportsOpen = !reportsOpen" class='flex items-center text-gray-600 w-full overflow-hidden'>
+                <p class="font-sans font-semibold text-base m-4">
+                    <span class="bg-green-400 text-white rounded-md p-2">POST</span>
+                </p>
+                <div class='flex items-center text-dark font-sans font-semibold text-lg w-full'>
+                     <!-- Mostrar apenas em telas pequenas -->
+                    <button class="hover:underline sm:hidden">{% trans 'Consultar' %}</button>
+                    <!-- Mostrar em telas médias e grandes -->
+                    <button class="hover:underline hidden md:block">/api_receitas/create</button>
+                    <div class='ml-auto flex items-center'>
+                        <div class="row flex items-center justify-between">
+                            <!-- Mostrar apenas em telas médias e grandes -->
+                            <p class="text-xs mr-2 hidden lg:block">{% trans 'Criar Receitas' %}</p>
+                            <svg width="20" height="10" viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+                                <line x1="0" y1="0" x2="10" y2="10" stroke="#9CA3AF" />
+                                <line x1="20" y1="0" x2="10" y2="10" stroke="#9CA3AF" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-300" x-cloak x-show="reportsOpen">
+                {% include 'Documentation/api_recipes/api_recipes_tables/api_recipes_post.html' %}
+            </div>
+        </div>
+    </div>
+
+    <div class='cursor-pointer p-1 bg-amber-100 rounded-md shadow-lg mb-5 border border-amber-500' x-data="{ reportsOpen: false }">
+        <div class='mx-auto space-y-1'>
+            <div @click="reportsOpen = !reportsOpen" class='flex items-center text-gray-600 w-full overflow-hidden'>
+                <p class="font-sans font-semibold text-base m-4">
+                    <span class="bg-amber-400 text-white rounded-md p-2">PUT</span>
+                </p>
+                <div class='flex items-center text-dark font-sans font-semibold text-lg w-full'>
+                     <!-- Mostrar apenas em telas pequenas -->
+                    <button class="hover:underline sm:hidden">{% trans 'Consultar' %}</button>
+                    <!-- Mostrar em telas médias e grandes -->
+                    <button class="hover:underline hidden sm:block">/api_receitas/update/{recipeID}</button>
+                    <div class='ml-auto flex items-center'>
+                        <div class="row flex items-center justify-between">
+                            <!-- Mostrar apenas em telas médias e grandes -->
+                            <p class="text-xs mr-2 hidden lg:block">{% trans 'Atualizar receitas por recipeID' %}</p>
+                            <svg width="20" height="10" viewBox="0 0 20 10" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+                                <line x1="0" y1="0" x2="10" y2="10" stroke="#9CA3AF" />
+                                <line x1="20" y1="0" x2="10" y2="10" stroke="#9CA3AF" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-300" x-cloak x-show="reportsOpen">
+              {% include 'Documentation/api_recipes/api_recipes_tables/api_recipes_put.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

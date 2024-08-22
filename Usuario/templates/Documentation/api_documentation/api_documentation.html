@@ -1,0 +1,188 @@
+{% extends 'Documentation/bases/base_doc.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div class="container mx-auto container-fluid">
+
+  <style>.fixed-middle-right {position: fixed;right: 35px;top: 95%;transform: translateY(-50%);}</style>
+
+  <!-- Floating Button -->
+  <button id="openModalButton" class="fixed-middle-right text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 shadow-lg px-4 py-2 rounded flex items-center space-x-2">
+     {% if lang == 'pt-br' %}
+          <span>PT-BR</span>
+          <img class="h-6 h-6 border border-success" alt="Português" src="/static/img/pt.gif" title="Veja este site em Português">
+      {% elif lang == 'en' %}
+          <span>EN</span>
+          <img class="h-6 h-6 border border-success"  alt="English" src="/static/img/en.png" title="This site in English">
+      {% elif lang == 'es' %}
+          <span>ES</span>
+          <img class="h-6 h-6 border border-success" alt="Español" src="/static/img/es.png" title="Este site en Español">
+      {% endif %}
+  </button>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-1/4">
+
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl">{% trans 'Escolha o idioma' %}</h2>
+        <button id="closeModalButton" class="bg-red-500 hover:bg-gray-400 hover:text-dark text-white px-4 py-2 rounded hover:bg-red-700 focus:outline-none">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+            </svg>
+        </button>
+      </div>
+
+      <div class="container-fluid">
+        <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+
+          <input name="next" type="hidden" value="{{ redirect_to }}">
+
+          {% get_current_language as LANGUAGE_CODE %}
+          {% get_available_languages as LANGUAGES %}
+          {% get_language_info_list for LANGUAGES as languages %}
+
+          <div class="flex justify-content-center">
+            <button type="submit" class="btn mx-3" name="language" value="pt-br">
+                <span>PT-BR</span>
+              <img class="img-fluid border border-success" alt="Português" src="/static/img/pt.gif" title="Veja este site em Português">
+            </button>
+
+            <button type="submit" class="btn mx-3" name="language" value="en">
+                <span>EN</span>
+              <img class="img-fluid border border-danger" alt="English" src="/static/img/en.png" title="This site in English">
+            </button>
+
+            <button type="submit" class="btn mx-3" name="language" value="es">
+              <span>ES</span>
+              <img class="img-fluid border border-warning" alt="Español" src="/static/img/es.png" title="Este site en Español">
+            </button>
+          </div>
+        </form>
+      </div>
+
+
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('openModalButton').addEventListener('click', function() {
+      document.getElementById('modal').classList.remove('hidden');
+    });
+
+    document.getElementById('closeModalButton').addEventListener('click', function() {
+      document.getElementById('modal').classList.add('hidden');
+    });
+  </script>
+    <!--GET STARTED-->
+    <div class="flex flex-wrap">
+        <div class="w-full md:w-1/2">
+          {% include 'Documentation/api_reference/api_reference.html' %}
+        </div>
+    </div>
+    <hr><br>
+    <div class="row">
+        {% include 'Documentation/api_fluxo/api_fluxo.html' %}
+    </div>
+    <hr><br>
+    <div class="row">
+        {% include 'Documentation/api_beneficios/api_beneficios.html' %}
+    </div>
+    <hr><br>
+    <div class="row">
+        {% include 'Documentation/api_security/api_security.html' %}
+    </div>
+    <hr class="mt-2"><br>
+    <div class="flex flex-wrap">
+        <div class="w-full md:w-1/2">
+          {% include 'Documentation/api_authentication/api_authentication.html' %}
+        </div>
+    </div>
+    <hr><br>
+
+    <div class="row">
+        {% include 'Documentation/api_endpoints/api_endpoints.html' %}
+    </div><br>
+
+
+    <!--ENDPOINTS-->
+    <div class="row md:w-2/2 xl:w-1/2 ">
+        {% include 'Documentation/api_token/api_token.html' %}
+    </div>
+
+    <br>
+
+    <div class="row md:w-2/2 xl:w-1/2">
+        {% include 'Documentation/api_alarms/api_alarms.html' %}
+    </div>
+
+    <br>
+
+    <div class="row md:w-2/2 xl:w-1/2">
+        {% include 'Documentation/api_production/api_production.html' %}
+    </div>
+
+    <br>
+
+    <div class="row md:w-2/2 xl:w-1/2">
+        {% include 'Documentation/api_recipes/api_recipes.html' %}
+    </div>
+    <div class="row md:w-2/2 xl:w-1/2">
+        {% include 'Documentation/api_recipes/api_recipes_dados.html' %}
+    </div>
+
+    <br>
+
+    <div class="row md:w-2/2 xl:w-1/2">
+        {% include 'Documentation/api_timeline/api_timeline.html' %}
+    </div>
+    <div class="row md:w-2/2 xl:w-1/2">
+        {% include 'Documentation/api_timeline/api_timeline_sensor.html' %}
+    </div>
+
+    <br>
+
+    <div class="row md:w-2/2 xl:w-1/2">
+        {% include 'Documentation/api_temperature/api_temperature.html' %}
+    </div>
+
+    <br>
+
+    <div class="row md:w-2/2 xl:w-1/2">
+        {% include 'Documentation/api_eletric_amps/api_eletric_amps.html' %}
+    </div>
+
+    <br>
+
+    <div class="row md:w-2/2 xl:w-1/2">
+        {% include 'Documentation/api_speed/api_speed.html' %}
+    </div>
+
+    <br>
+
+    <div class="row md:w-2/2 xl:w-1/2">
+        {% include 'Documentation/api_rwtc/api_rwtc.html' %}
+    </div><br>
+
+    <div class="row md:w-2/2 xl:w-1/2">
+        {% include 'Documentation/api_horimeter/api_horimeter.html' %}
+    </div>
+    <div class="row md:w-2/2 xl:w-1/2">
+        {% include 'Documentation/api_horimeter/api_horimeter_reset.html' %}
+    </div>
+
+    <br>
+
+
+    <div class="row md:w-2/2 xl:w-1/2">
+        {% include 'Documentation/api_sensor/api_sensor.html' %}
+    </div>
+
+    <br>
+
+    <div class="row md:w-2/2 xl:w-1/2">
+        {% include 'Documentation/api_status/api_status.html' %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% load i18n %}
+<h2 class="mb-1 mt-2 text-base font-medium px-2">
+    {% trans 'PARÂMETROS DE CONSULTA' %}
+</h2>
+<div class="row">
+    <div class="w-full p-2">
+        <div class="m-1 mb-2">
+             {% trans 'Esse endpoint retorna quando ocorreu o fechamento da porta 02. É necessário passar parâmetros como ‘hora de início’ (data_min) e ‘hora de término’ (data_max) para consultar os dados.' %}
+        </div>
+        <hr>
+        <div class="m-1 my-2">
+            <span class="font-medium uppercase text-sm">{% trans 'Exemplo de consulta: ' %}</span>
+            <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
+                m000-app.rotoline.com/api_sensor/door02_closed/2024-04-14 07:08&2024-04-14 15:30
+            </div>
+        </div>
+        <hr>
+        <h2 class="mb-2 text-base font-medium px-2 mt-4">
+            {% trans 'ESTRURA DA TABELA SENSOR e RETORNO DA API' %}
+        </h2>
+        <ul class="max-w-md space-y-1 list-none list-inside  px-2">{
+           <li>
+               <span class="text-dark font-bold text-base ml-3">sensor: </span>
+               <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (retorna a nomenclatura do sensor (FC4), que representa o fechamento da PORTA 02)' %}</span>
+           </li>
+           <li>
+               <span class="text-dark font-bold text-base ml-3">carro: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (retorna (-), pois a porta não tem vínculo com o carro)' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">valor: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'número (retorna o valor do sensor (1 = sensor ativo, 0 = sensor inativo))' %}</span>
+           </li>
+           <li>
+              <span class="text-dark font-bold text-base ml-3">medida: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (sempre retorna (ON/OFF)' %}</span>
+           </li>
+              <li>
+                <span class="text-dark font-bold text-base ml-3">datetime: </span>
+                <span class="font-sans font-medium text-sm text-blue-800">{% trans 'texto (Data e hora em que a leitura foi registrada)' %}</span>
+            </li>
+        }
+        </ul>
+    </div>
+</div>
