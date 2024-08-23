@@ -25,3 +25,22 @@ def enviarCredentials(request):
     msg = EmailMultiAlternatives(subject=subject, body="", from_email=from_email, to=[to, "ti@rotoline.com"])
     msg.attach_alternative(html_content, "text/html")
     msg.send()
+
+
+# criptografia url------------------------------------------------------------------------------------------------------
+def encrypt_name(encrypt_str):
+    encrypted_str = ""
+    for char in encrypt_str:
+        encrypted_char = chr(ord(char) + 7)  # Shift characters in the ASCII table
+        encrypted_str += encrypted_char
+    return encrypted_str
+
+
+# Função para descriptografar uma string
+def decrypt_name(decrypt_str):
+    decrypted_str = ""
+    for char in decrypt_str:
+        decrypted_char = chr(ord(char) - 7)  # Mudar para o caractere anterior na tabela ASCII
+        decrypted_str += decrypted_char
+    return decrypted_str
+# ----------------------------------------------------------------------------------------------------------------------

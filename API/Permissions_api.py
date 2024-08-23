@@ -1,109 +1,130 @@
+import re
+
 import jwt
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import User, Permission, Group
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework.authentication import BasicAuthentication, SessionAuthentication
+from rest_framework.response import Response
 from API import settings
-from Usuario.models import AuthGroup, AuthUserGroups, ControlApi
+from Usuario.models import AuthGroup, ControlApi, Machines_API, User_Acess_Machines, Token_user
 
+
+def retorna_user_api(request):
+    try:
+        token = request.META.get('HTTP_AUTHORIZATION', '').split(' ')[1]
+        decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+        user_id = decoded_token.get('user_id')
+        user = User.objects.get(id=user_id)
+        return {"User": user}
+    except jwt.ExpiredSignatureError:
+        return {"Error": "Your token expired"}
+    except jwt.DecodeError:
+        return {"Error": "Erro ao decodificar o token"}
+    except User.DoesNotExist:
+        return {"Error": "User not found!"}
+    except Exception as e:
+        return {"Error": str(e)}
+
+
+def validate_machine_format(machine):
+    if not re.match(r'^M\d{1,3}$', machine):
+        return False, _(
+            'Invalid machine format. The correct format is "M" + "serial number" = (M0, M1, M300, M500 ...).')
+    return True, None
+
+
+def get_valid_machines():
+    return Machines_API.objects.filter(status=1).values_list('n_serie', flat=True)
+
+
+def check_user_access(user, machine):
+    try:
+        machine_db = Machines_API.objects.get(n_serie=machine)
+        User_Acess_Machines.objects.get(user=user, machine=machine_db)
+        return True
+    except ObjectDoesNotExist:
+        return False
+
+
+def get_machine_db_alias(machine):
+    # Assuming `machine` directly maps to the database alias
+    return machine
 
 
 class Admin(BasePermission):
     def has_permission(self, request, view):
+
         auth_header = request.META.get('HTTP_AUTHORIZATION', '')
         if auth_header:
             try:
                 token = auth_header.split(' ')[1]
                 # indentifica se o token foi gerado pela aplicacao que está sendo consultada
                 decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
-
                 # get user id in json token
                 user_id = decoded_token.get('user_id')
-
                 # query in USER
                 user = User.objects.get(id=user_id)
-
                 # get credentials no controle da API
-                if user.is_superuser == 1:
-                    return True
-                else:
-                    return False
+                if user.is_superuser == 1: return True
+                else: return False
             except (jwt.exceptions.DecodeError, jwt.exceptions.InvalidTokenError) as error:
                 raise AuthenticationFailed(_('Token de autenticação inválido.', error))
         else:
-            print('aqui')
+            return Response([{"Error": "Try again request"}])
 
 
-# class de permissão ao acesso a API
+# its my obra prima
+
 class ApenasApi(BasePermission):
     def has_permission(self, request, view):
         auth_header = request.META.get('HTTP_AUTHORIZATION', '')
         if auth_header:
+            token = self.get_token_from_header(auth_header)
             try:
-                token = auth_header.split(' ')[1]
-
-                # indentifica se o token foi gerado pela aplicacao que está sendo consultada
-                decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
-
-                # get user id in json token
-                user_id = decoded_token.get('user_id')
-
-                # query get id group
-                group_id = AuthGroup.objects.get(name='Api')
-
-                # query in USER
-                user = User.objects.get(id=user_id)
-
-                # get credentials no controle da API
-                if user.is_superuser == 1:
+                user = self.get_user_from_token(token)
+                if user.is_superuser or self.is_user_in_api_group(user):
                     return True
-
-                else:
-                    # query in GROUP
-                    group = AuthGroup.objects.get(id=group_id.id)
-
-                    # User e Group
-                    user_and_group = AuthUserGroups.objects.get(user_id=user.id)
-
-                    control_api = ControlApi.objects.get(user_id_id=user.id, group_user_id_id=group.id)
-
-                    if user_and_group.group_id == group.id and control_api.reg_ativo == 1:
-                        return True
-
-                    else:
-                        return False
 
             except (jwt.exceptions.DecodeError, jwt.exceptions.InvalidTokenError) as error:
-                raise AuthenticationFailed(_('Token de autenticação inválido.'))
+                print("Invalid token:", error)
+                raise AuthenticationFailed(_('Invalid authentication token.'))
             except ObjectDoesNotExist as error:
-                raise AuthenticationFailed(_('Usuário ou grupo não encontrado.'))
+                print("Object not found:", error)
+                raise AuthenticationFailed(_('User or group not found.'))
         else:
-            if request.user.is_superuser == 1 or request.user.is_superuser == True:
+            if request.user.is_authenticated and request.user.is_superuser:
                 return True
-            else:
-                # query get id group
-                group_id = AuthGroup.objects.get(name='Api')
+            if self.is_user_in_api_group(request.user):
+                return True
 
-                # query in USER
-                user = User.objects.get(id=request.user.id)
+        return Response([{"Not Access": "Your user has restricted access, please report to the administrator for more ""information"}])
 
-                # query in GROUP
-                group = AuthGroup.objects.get(id=group_id.id)
+    def get_token_from_header(self, auth_header):
+        return auth_header.split(' ')[1]
 
-                # User e Group
-                user_and_group = AuthUserGroups.objects.get(user_id=user.id)
+    def get_user_from_token(self, token):
+        # Verifica se o token existe no banco
+        try:
+            token_record = Token_user.objects.get(token=token)
+        except Token_user.DoesNotExist:
+            print("aquii")
+            raise AuthenticationFailed(_('Token inválido. Gere o token e adicione no cabeçalhos das requisições. Para gerar o token use o endpoint /api_token que ira retorna o token de acesso.'))
 
-                # get credentials no controle da API
-                control_api = ControlApi.objects.get(user_id_id=user.id, group_user_id_id=group.id)
+        # Decodifica o token para obter o usuário
+        decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=['HS256'])
+        user_id = decoded_token.get('user_id')
+        return User.objects.get(id=user_id)
 
-                if user_and_group.group_id == group.id and control_api.reg_ativo == 1:
-                    return True
-                else:
-                    return False
+    def is_user_in_api_group(self, user):
+        api_group = Group.objects.get(name='Api')
+        control_api = ControlApi.objects.get(user=user, group=api_group)
+        return control_api.reg_ativo
+
 
 
 schema_view = get_schema_view(

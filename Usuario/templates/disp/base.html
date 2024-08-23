@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+{% load i18n %}
+{% load static %} <!-- Carga dos arquivos estaticos-->
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Manufacturing Execution System - (MES) - ROTOLINE EQUIPAMENTOS INDÚSTRIAS LTDA / Rotomolding Machines - BR/USA
+    API (Aplication programming Interface) Rotoline">
+    <meta name="author" content="Dioni__">
+
+    <!--Vis.js, Library js to timeline build-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js" integrity="sha512-XHDcSyqhOoO2ocB7sKOCJEkUjw/pQCJViP1ynpy+EGh/LggzrP6U/V3a++LQTnZT7sCQKeHRyWHfhN2afjXjCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!--<script src="{% static 'node_modules/vis-timeline/dist/vis-timeline-graph2d.min.js' %}" ></script>-->
+    <link rel="stylesheet" href="{% static 'node_modules/vis-timeline/dist/vis-timeline-graph2d.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'node_modules/animate.css/animate.min.css' %}"/>
+
+    <!-- Favicon para tirar o erro -->
+    <link rel="icon" href="{% static 'favicon.ico' %}">
+
+    <!--Title -->
+    <title>RotoAPI4.0 |{% block title %} Dashboard {% endblock %}</title>
+
+    <!--Fontes personalizadas para este modelo-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/nunito.css' %}" rel="stylesheet">
+
+    <!--Estilos personalizados para este modelo-->
+    <link href=" {% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link href=" {% static 'css/sb-admin-2.css' %}" rel="stylesheet">
+
+    <!--Estilos personalizados para esta página- tabela -->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+    <script src="{% static 'node_modules/boxicons/dist/boxicons.js' %}"></script>
+    <link href="{% static 'node_modules/boxicons/css/boxicons.min.css' %}" rel='stylesheet'>
+    <script type="text/javascript" src="{% static 'js/jquery-3.6.0.js' %}"></script>
+    <script src="{% static 'node_modules/sweetalert2/dist/sweetalert2.all.js' %}"></script>
+
+    <script src="{% static 'node_modules/highcharts/highcharts.js' %}"></script>
+    <script src="{% static 'node_modules/highcharts/modules/exporting.js' %}"></script>
+    <script src="{% static 'node_modules/highcharts/modules/export-data.js' %}"></script>
+    <script src="{% static 'node_modules/highcharts/modules/accessibility.js' %}"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    {% block extensions %}
+
+    {% endblock %}
+
+</head>
+
+<body id="page-top">
+
+{% block wrapper %} {% endblock wrapper %}
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="exampleModalLabel">{% trans "Você tem certeza" %}?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">{% trans "Selecione 'Sair' abaixo se você estiver pronto para encerrar sua sessão atual" %}.
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">{% trans "Cancelar" %}</button>
+                <a class="btn btn-danger" href="{% url 'login' %}">{% trans "Sair" %}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="alertaModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">{% trans "Você tem certeza" %}?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">{% trans "Selecione 'Excluir' abaixo se você realmente quer limpar todos os alertas" %}.
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">{% trans "Cancelar" %}</button>
+<!--                <a class="close_all btn btn-danger" href="" close-href_all="">{% trans "Excluir Todos" %}</a>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Bootstrap core JavaScript -->
+<script src=" {% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src=" {% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Core plugin JavaScript -->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+<!-- Custom scripts for all pages -->
+<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+<script src=" {% static 'message/js.cookie.min.js' %}"></script>
+
+
+{% block script %}
+<script>
+// function timer(){//verifica se o turno realizou tada a programação do turno
+// $.ajax({
+//     type: "GET",
+//     url: ,
+//         success: function (data) {
+//             if (data.existe) {
+//                 swal("Atenção!", data.error_message, "warning")
+//             }
+//         }
+//     });
+// }
+// setInterval(timer, 300000); //5min
+
+// $(function() { //CHAMA O BOTÃO LIMPA TODOS
+//     $("a.close_all[close-href_all]").click(function (e) {
+//             e.preventDefault();
+//             $.get($(this).attr("close-href_all"), "", function () {
+//             });
+//             $("#alertas").load(location.href + " #alertas");
+//             $('#alertaModal').modal('hide')
+//             location.reload(true);
+//         }
+//     );
+// });
+</script>
+{% endblock script %}
+</body>
+</html>

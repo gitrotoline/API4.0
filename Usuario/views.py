@@ -1,34 +1,42 @@
 from datetime import timezone
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import check_password
+from django.core.exceptions import ObjectDoesNotExist
+from django.utils.datastructures import MultiValueDictKeyError
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.models import Group, Permission, User
 from django.db import IntegrityError, connections
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from Usuario.fux_auxiliares import enviarCredentials
-from Usuario.models import TableLog, AuthGroupPermissions
-import re
-from django.db.utils import ConnectionDoesNotExist
+from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenObtainSerializer
+from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from rest_framework_simplejwt.views import TokenObtainPairView
+from Usuario.forms import RegisterForm
+from Usuario.fux_auxiliares import enviarCredentials, decrypt_name, encrypt_name
+from Usuario.models import TableLog, AuthGroupPermissions, Token_user, AuthGroup, ControlApi
 from django.utils.translation import get_language
-from django.shortcuts import render, reverse
+from django.shortcuts import render, reverse, redirect
+from Usuario.serializers import CustomTokenObtainSerializer
 
 
+def index(request):
+    dados_machine = []
+    return render(request, 'api/page_apresentations_dados_machine.html', {
+        'lang': get_language(), 'dados_machines': dados_machine})
+
+
+# ----------------------------------- DOCUMENTATION API ----------------------------------------------------------------
+@login_required()
 def documentation(request, machine):
-    machines = ["M442", "M365", "M453", "M407", "M508", "M537", "M567", "TESTE"]
+    return render(request, "Documentation/api_documentation/api_documentation.html",
+                  {"lang": get_language()})
 
-    # # Verificar se o formato é "M" seguido por 1 a 3 dígitos
-    # if not re.match(r'^M\d{1,3}$', machine) or machine != "TESTE":
-    #     print("aqui", machine)
-    #     raise Http404("Invalid machine format.")
-
-    # Verificar se a máquina está na lista
-    if machine not in machines:
-        raise Http404("Machine not found.")
-
-    # Passando a linguagem atual para o template
-    return render(request, "Documentation/api_documentation/api_documentation.html", {"lang": get_language()})
+# --------------------------------------------------------------------------------------------------------------------
 
 
+# Erros HTTP -----------------------------------------------------------------------------------------------------------
 def handler404(request, exception):
     return render(request, 'errors/404.html', status=404)
 
@@ -36,8 +44,11 @@ def handler404(request, exception):
 def handler500(request):
     return render(request, 'errors/500.html', status=500)
 
+# ----------------------------------------------------------------------------------------------------------------------
 
-def emailUser(request):
+
+# criar usuarios na primeira instalação --------------------------------------------------------------------------------
+def email_user(request):
     return render(request, 'emailUser.html')
 
 
@@ -91,6 +102,145 @@ def usuario_auto(request):
 
     except IntegrityError:
         messages.warning(request, _("As configurações padrão já constam no Banco de Dados"))
-        return HttpResponseRedirect(reverse('home2'))
+        return HttpResponseRedirect(reverse('home'))
 
     return HttpResponse(_('Usuários já existem no Banco de Dados'))
+
+
+# ------------------------------------------ end create user -----------------------------------------------------------
+
+
+# ------------------------------------------- gera e armazena o token solict via /api_token/ ---------------------------
+
+class CustomTokenObtainView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainSerializer
+
+# endpoint /api_token/ -------------------------------------------------------------------------------------------------
+
+
+# ---------------------------------- LOGIN -----------------------------------------------------------------------------
+
+def validate_user(request):
+    if request.method == "POST":
+        try:
+            username = request.POST['username']
+        except MultiValueDictKeyError as error:
+            messages.error(request, _(f'Usuário não informado! Erro: {error}'))
+            return HttpResponseRedirect(reverse('login'))
+        except Exception as error:
+            message = _("Opss... Ocorreu um erro inesperado! ") + f"Erro: {error}"
+            messages.error(request, message=message)
+            return HttpResponseRedirect(reverse("login"))
+
+        try:
+            user = User.objects.get(username=username)
+            messages.success(request, _("Para continuar o login, informe sua senha"))
+            return HttpResponseRedirect(reverse('validate_password', kwargs={'user': encrypt_name(user.username)}))
+        except ObjectDoesNotExist as error:
+            messages.error(request, _(f'Usuário não encontrado: Erro: {error}'))
+        except Exception as error:
+            message = _("Opss... Ocorreu um erro inesperado! ") + f"Erro: {error}"
+            messages.error(request, message=message)
+
+        return HttpResponseRedirect(reverse("login"))
+
+    messages.error(request, _("Método de requisão não permitido!"))
+    return HttpResponseRedirect(reverse('login'))
+
+
+def validate_password(request, user):
+    try:
+        user_normal = User.objects.get(username=decrypt_name(user))
+    except Exception as error:
+        message = _("Opss... Ocorreu um erro ao validar o login, tente novamente!") + f"Erro: {error}"
+        messages.error(request, message=message)
+        return HttpResponseRedirect(reverse('login'))
+
+    return render(request, 'registration/loginPassword.html', {"user": user})
+
+
+
+# verfica a senha e se é compativel com email, se for valido redireciona para escolher a empresa
+def login_in_system(request):
+    try:
+        user = request.POST.get('user')
+        p = request.POST.get('password')
+    except Exception as error:
+        message = _("Opss... Ocorreu um erro ao valida o login, tente novamente!") + f"Erro: {error}"
+        messages.error(request, message=message)
+        return HttpResponseRedirect(reverse('login'))
+
+    try:
+        user = User.objects.get(username=decrypt_name(user))
+
+        if check_password(p, user.password):
+            login(request, user)
+            return HttpResponseRedirect(reverse("home"))
+        else:
+            messages.error(request, _("Senha errada, revise e tente novamente!"))
+            return HttpResponseRedirect(reverse("validate_password", kwargs={"user": user}))
+
+    except ObjectDoesNotExist:
+        messages.error(request, _(f"Usuário não encontrado, verifique os dados e tente novamente!"))
+        return HttpResponseRedirect(reverse("login"))
+
+    except Exception as error:
+        message = _("Opss... Ocorreu um erro ao valida o login, tente novamente!") + f"Erro: {error}"
+        messages.error(request, message=message)
+        return HttpResponseRedirect(reverse('login'))
+
+@login_required()
+def register(request):
+    if request.method == 'POST':
+
+        if request.user.is_superuser:
+            form = RegisterForm(request.POST)
+            nameGroups = AuthGroup.objects.all()
+
+        else:
+            form = RegisterForm(request.POST)
+            nameGroups = AuthGroup.objects.all().exclude(name="Api")
+
+        if form.is_valid():
+            form.save()
+            # dados do usuario
+            user = User.objects.get(username=request.POST['username'])
+
+            logTerms = TableLog(termsOfPrivacy=0, userId=user.id)
+            logTerms.save()
+
+            # dados group
+            userGroup = AuthGroup.objects.get(name=request.POST['group'])
+
+            if user:
+                # control API - USERS
+                if userGroup.name == "Api" or userGroup.id == 1:
+                    control = ControlApi(user=user, group=userGroup, reg_ativo=1)
+                    control.save()
+                else:
+                    pass
+
+                messages.success(request, _(f'Usuario {user.username} foi adicionado ao grupo de {userGroup.name} !'))
+                return redirect('login')
+
+    else:
+        if request.user.is_superuser:
+            form = RegisterForm(request.POST)
+            nameGroups = AuthGroup.objects.all()
+        else:
+            form = RegisterForm(request.POST)
+            nameGroups = AuthGroup.objects.all().exclude(name="Api")
+
+    return render(request, "registration/register.html", {"form": form, 'grupos': nameGroups})
+
+
+def validate_username(request):
+    username = request.GET.get('username', None)
+
+    data = {
+        'existe': User.objects.filter(username__iexact=username).exists()
+    }
+
+    if data['existe']:
+        data['error_message'] = _('Esse usúario já existe')
+    return JsonResponse(data)

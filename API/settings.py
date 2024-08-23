@@ -9,9 +9,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-w*v^y5uu%x8=**9qorpl8a!slr6q8xi*bdjp61_duducb23u$)'
 
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', False)
+DEBUG = os.getenv('DEBUG', True)
 ALLOWED_HOSTS = ['*']
 INTERNAL_IPS = ['127.0.0.1']
 
@@ -109,9 +112,6 @@ DATABASES = {
 }
 
 
-
-
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -181,13 +181,14 @@ REST_FRAMEWORK = {
     ),
 }
 
+
 # Configurações do Simple JWT
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=24),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'UPDATE_LAST_LOGIN': False,
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=36500),  # Aproximadamente 100 anos
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=0),  # Imediatamente expirado
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': False,
+    'UPDATE_LAST_LOGIN': True,
     'ALGORITHM': 'HS256',
     'VERIFYING_KEY': None,
     'AUDIENCE': None,

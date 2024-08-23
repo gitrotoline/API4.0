@@ -1,6 +1,10 @@
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
+
 from rest_framework_simplejwt import views as jwt_views
+
 from Usuario import urls as users_urls
 from Horimetros import urls as horimeter_urls
 from Alarmes import urls as alarmes_urls
@@ -11,23 +15,33 @@ from Temperatura import urls as temp_urls
 from Corrente import urls as amps_urls
 from Rwtc import urls as rwtc_urls
 from Sensor import urls as sensor_urls
+from Usuario.views import CustomTokenObtainView
 from Velocidade import urls as speed_urls
 from Status import urls as status_machine
-from Usuario import views as v_doc
-
+from Usuario import views as view_pro_users
+from Usuario import urls_login
 
 urlpatterns = [
     # URL Translate
     path('i18n/', include('django.conf.urls.i18n')),
 
-    # URL Documentation
-    path('<str:machine>', v_doc.documentation, name="documentation"),
+    # LOGIN AND REGISTER USERS
+    path('', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('login/', include(urls_login)),
+    path('validate_username/', view_pro_users.validate_username, name='validate_username'),
+    path('register', login_required(view_pro_users.register), name='register'),
 
+    # URL Documentation
+    path('<str:machine>', view_pro_users.documentation, name="documentation"),
+
+    # HOME AND DOCUMENTATION API
     path('home/', include(users_urls)),
     path('admin_secret_karaio_adivinha_ai_otario_renigth_fora_plmr_de_Dios/', admin.site.urls),
 
     # TOKEN DE ACESSO DA API
-    path('api_token/<str:machine>/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api_token/', CustomTokenObtainView.as_view(), name='token_obtain'),
 
     # URLS DOS HORIMETROS DA API
     path('api_horimeter/<str:machine>/', include(horimeter_urls)),
@@ -63,4 +77,4 @@ urlpatterns = [
 ]
 
 handler404 = 'Usuario.views.handler404'
-handler500 = 'Usuario.views.handler500'
+# handler500 = 'Usuario.views.handler500'
