@@ -8,28 +8,44 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.models import Group, Permission, User
-from django.db import IntegrityError, connections
-from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenObtainSerializer
-from rest_framework_simplejwt.tokens import RefreshToken, AccessToken
+from django.db import IntegrityError
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from rest_framework_simplejwt.tokens import AccessToken
 from rest_framework_simplejwt.views import TokenObtainPairView
 from Usuario.forms import RegisterForm
 from Usuario.fux_auxiliares import enviarCredentials, decrypt_name, encrypt_name
-from Usuario.models import TableLog, AuthGroupPermissions, Token_user, AuthGroup, ControlApi
+from Usuario.models import TableLog, AuthGroupPermissions, AuthGroup, ControlApi, Token_user
 from django.utils.translation import get_language
 from django.shortcuts import render, reverse, redirect
 from Usuario.serializers import CustomTokenObtainSerializer
 
 
 def index(request):
-    dados_machine = []
-    return render(request, 'api/page_apresentations_dados_machine.html', {
-        'lang': get_language(), 'dados_machines': dados_machine})
 
+    return render(request, 'api/page_apresentations_dados_machine.html', {'lang': get_language()})
+
+
+def token_access(request):
+    if request.user.is_superuser:
+        access_token = "Admin não possui token!"
+    else:
+        try:
+            user = User.objects.get(id=request.user.id)
+            # Verifica se o token já existe para o usuário
+            user_token = Token_user.objects.get(user=user)
+            access_token = user_token.token
+        except Token_user.DoesNotExist:
+            # Gera um novo token de acesso
+            access_token = str(AccessToken.for_user(request.user))
+            # Armazena o token no banco de dados
+            Token_user.objects.create(user=user, token=access_token)
+            access_token = access_token
+
+    return render(request, "token/token_access.html", {"token": access_token})
 
 # ----------------------------------- DOCUMENTATION API ----------------------------------------------------------------
 @login_required()
-def documentation(request, machine):
+def documentation(request):
     return render(request, "Documentation/api_documentation/api_documentation.html",
                   {"lang": get_language()})
 

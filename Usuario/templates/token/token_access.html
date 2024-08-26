@@ -1,0 +1,152 @@
+{% extends 'disp/index.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Dados API" %}
+{% endblock %}
+
+{% block extensions %}
+
+{% endblock %}
+
+{% block conteudo %}
+<div class="container mx-auto p-6 mt-8 rounded-lg bg-white shadow-lg">
+
+    <h3 class="text-2xl font-semibold text-gray-800 mb-4">{% trans "Token de Acesso da ROTOAPI 4.0" %}</h3>
+
+    <div class="bg-gray-100 p-4 rounded-lg shadow-inner border border-gray-300">
+        <p class="text-gray-700 font-semibold text-sm mb-2">{% trans "Sua Chave de Acesso da API" %}</p>
+        <div class="mb-4">
+            <input type="text" value="{{ token }}" id="token" class="w-full p-2.5 border border-blue-500 rounded-lg text-gray-800 bg-gray-50 focus:ring-blue-500 focus:border-blue-500" readonly/>
+        </div>
+        <button id="copyButton" type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-1.5 text-center me-2 mb-2">
+            <i class='bx bx-copy-alt text-lg'></i>  {% trans "Copiar" %}
+        </button>
+        <button type="button" class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-1.5 text-center me-2 mb-2">
+            <i class='bx bx-rotate-left text-lg'></i> {% trans "Novo Token" %}
+        </button>
+    </div>
+
+    <br>
+
+    <!-- Alert Section -->
+    <div class="flex flex-col space-y-4 p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
+        <div class="flex items-center text-sm">
+            <svg class="flex-shrink-0 inline w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="sr-only">Info</span>
+            <span class="font-medium"></span> {% trans "Use o token de acesso para consultar, criar ou alterar dados dos endpoints da API. Ou, se preferir, você pode obter o token via endpoint" %} www.rotoapi.rotolin.com/api_token, {% trans "ao consultar (método GET), retornar o respectivo token de acesso." %}
+        </div>
+        <ul class="space-y-1 list-disc list-inside text-blue-800">
+            <li>{% trans "O ‘token’ não tem data para expirar. Caso necessite você poderá gerar outro token!" %}</li>
+            <li>{% trans "Para realizar as consultas, é obrigátorio passar o token no cabeçalho da requisição HTTP's. O parâmetro token no cabeçalho é o HTTP Authorization!" %}</li>
+            <li>{% trans "Para consultar os dados das suas máquinas, é necessário passar o número de série da mesma, exemplo: M500, M300, M120..., consulte a documentação para mais detalhes." %}</li>
+        </ul>
+    </div>
+
+    <!-- IDE-like Background Section for curl and Python examples -->
+    <div class="bg-gray-900 text-gray-100 p-6 rounded-lg shadow-lg mt-6">
+        <h4 class="text-lg font-semibold text-teal-300 mb-4">{% trans "Exemplo de Requisição" %}</h4>
+
+        <div class="mb-6 relative">
+            <p class="font-semibold text-teal-400">{% trans "Usando curl" %}</p>
+            <button class="absolute top-0 right-0 mt-2 mr-2 px-3 py-1 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none copy-btn" data-target="#curlCode">
+                {% trans "Copiar" %}
+            </button>
+            <pre id="curlCode" class="bg-gray-800 text-gray-100 p-4 rounded-lg"><code>
+<span style="color: #E06C75;">curl</span> -X <span style="color: #E06C75;">GET</span> "https://www.rotoapi.rotoline/M100/api_alarmes/2024-06-04&2024-10-06" \
+-H "<span style="color: #E5C07B;">Authorization</span>: <span style="color: #98C379;">Token SEU_TOKEN_AQUI</span>"
+            </code></pre>
+        </div>
+
+        <div class="relative">
+            <p class="font-semibold text-teal-400">{% trans "Usando Python com requests" %}</p>
+            <button class="absolute top-0 right-0 mt-2 mr-2 px-3 py-1 text-xs font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none copy-btn" data-target="#pythonCode">
+                {% trans "Copiar" %}
+            </button>
+            <pre id="pythonCode" class="bg-gray-800 text-gray-100 p-4 rounded-lg"><code>
+<span style="color: #C678DD;">import</span> requests
+
+# Defina o token e o endpoint
+token = "<span style="color: #98C379;">SEU_TOKEN_AQUI</span>"
+url = "<span style="color: #98C379;">https://www.rotoapi.rotoline/M100/api_alarmes/2024-06-04&2024-10-06</span>"
+
+# Cabeçalhos da requisição
+headers = {
+    "<span style="color: #E5C07B;">Authorization</span>": f"<span style="color: #98C379;">Token {token}</span>"
+}
+
+# Realiza a requisição GET
+response = requests.<span style="color: #61AFEF;">get</span>(url, headers=headers)
+
+# Verifica se a requisição foi bem-sucedida
+<span style="color: #C678DD;">if</span> response.status_code == <span style="color: #D19A66;">200</span>:
+    # Converte a resposta para JSON e exibe o conteúdo
+    data = response.<span style="color: #61AFEF;">json</span>()
+    <span style="color: #61AFEF;">print</span>(<span style="color: #98C379;">"Dados recebidos:"</span>, data)
+<span style="color: #C678DD;">else</span>:
+    <span style="color: #61AFEF;">print</span>(f"<span style="color: #98C379;">Erro na requisição:</span> {response.status_code} - {response.text}")
+            </code></pre>
+        </div>
+    </div>
+</div>
+
+<!-- Script para copiar o conteúdo dos blocos de código -->
+<script>
+    document.getElementById('copyButton').addEventListener('click', function() {
+        // Seleciona o texto do campo de entrada
+        const tokenField = document.getElementById('token');
+        tokenField.select();
+        tokenField.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+        // Copia o texto selecionado
+        navigator.clipboard.writeText(tokenField.value).then(() => {
+            // Notificação de cópia bem-sucedida com SweetAlert
+            Swal.fire({
+                title: 'Código Copiado!',
+                text: 'O código foi copiado para a área de transferência.',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }).catch(err => {
+            Swal.fire({
+                title: 'Erro!',
+                text: 'Não foi possível copiar o código.',
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 1500
+            });
+        });
+    });
+
+    // Adiciona funcionalidade para os botões de copiar nos blocos de código
+    document.querySelectorAll('.copy-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-target').substring(1); // Remove o #
+            const codeBlock = document.getElementById(targetId);
+            const text = codeBlock.innerText;
+
+            navigator.clipboard.writeText(text).then(() => {
+                Swal.fire({
+                    title: 'Código Copiado!',
+                    text: 'O código foi copiado para a área de transferência.',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }).catch(err => {
+                Swal.fire({
+                    title: 'Erro!',
+                    text: 'Não foi possível copiar o código.',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            });
+        });
+    });
+</script>
+
+{% endblock %}

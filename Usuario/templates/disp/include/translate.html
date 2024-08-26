@@ -1,0 +1,40 @@
+{% load i18n %}
+{% load static %}
+
+<div>
+    <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        <input name="next" type="hidden" value="{{ redirect_to }}">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        <div class="row row-centered pos">
+            <div class="col-ml-auto ">
+                <button type="submit" class="btn" name="language" value="pt-br"><img class="img-fluid" alt="Responsive image"
+                   data-placement="bottom"
+                   data-toggle="tooltip"
+                   src="/static/img/pt.gif"
+                   title="Veja este site em Português"
+                   data-original-title="Veja este site em Português">
+                </button>
+            </div>
+            <div class="col-ml-auto">
+                <button type="submit" class="btn" name="language" value="en"><img class="img-fluid" alt="Responsive image"
+                    data-placement="bottom"
+                    data-toggle="tooltip"
+                    src="/static/img/en.png"
+                    title="This site in English"
+                    data-original-title="This site in English">
+                </button>
+            </div>
+            <div class="col-ml-auto">
+                <button type="submit" class="btn " name="language" value="es"><img class="img-fluid" alt="Responsive image"
+                    data-placement="bottom"
+                    data-toggle="tooltip"
+                    src="/static/img/es.png"
+                    title="Este site en Español"
+                    data-original-title="Este site en Español">
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

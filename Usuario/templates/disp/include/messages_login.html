@@ -1,0 +1,66 @@
+{% for message in messages %}
+    {% if message.level == 10 or message.level == 20 or message.level == 25 or message.level == 30 or message.level == 40  %}
+        {% if message.level == 40 %}
+            <div class="alert alert-danger {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                <div class="row align-items-center justify-content text-base flex">
+                    <div class="text-xs font-fans">
+                        <i class="fas fa-times-circle text-red-800"></i>{{ message }}
+                    </div>
+
+                     <div id="id_close" class="m-0 col-xl">
+                        <a  class="close" data-dismiss="alert" {% if message.pk %} close_href="{% url 'message_mark_read' message.pk %}" {% endif %}>×</a>
+                     </div>
+                </div>
+            </div>
+        {% elif message.level == 30 %}
+            <div class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                <div class="row align-items-center justify-content text-base flex">
+                    <div class="text-xs font-fans">
+                        <i class="fas fa-exclamation-circle text-amber-800"></i>{{ message }}
+                    </div>
+
+                    <div id="id_close" class="m-0 col-xl">
+                        <a  class="close" data-dismiss="alert" {% if message.pk %} close_href="{% url 'message_mark_read' message.pk %}" {% endif %}>×</a>
+                    </div>
+                </div>
+            </div>
+
+        {% elif message.level == 25 %}
+            <div class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %} text-base flex">
+                <div class="row align-items-center justify-content-between text-base flex">
+                     <div class="text-xs font-fans">
+                         <i class="fas fa-check-circle text-green-800 mx-1"></i>{{ message }}
+                     </div>
+
+                    <div id="id_close" class="m-0 col-xl">
+                        <a  class="close" data-dismiss="alert" {% if message.pk %} close_href="{% url 'message_mark_read' message.pk %}" {% endif %}>×</a>
+                    </div>
+                </div>
+            </div>
+
+        {% elif message.level == 20 %}
+            <div class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                <div class="row align-items-center justify-content">
+                     <div class="text-xs font-fans">
+                        <i class="fas fa-file-alt text-blue-800"></i>{{ message }}
+                     </div>
+                     <div id="id_close" class="m-0 col-xl">
+                        <a  class="close" data-dismiss="alert" {% if message.pk %} close_href="{% url 'message_mark_read' message.pk %}" {% endif %}>×</a>
+                     </div>
+                </div>
+            </div>
+
+        {% else %}
+            <div class="alert {% if message.tags %} alert-{{ message.tags }} {% endif %}">
+                 <div class="row align-items-center justify-content">
+                     <div class="text-xs font-fans">
+                        <i class="fas fa-file-alt text-blue-800"></i>{{ message }}
+                     </div>
+                     <div id="id_close" class="m-0 col-xl">
+                        <a  class="close" data-dismiss="alert" {% if message.pk %} close_href="{% url 'message_mark_read' message.pk %}" {% endif %}>×</a>
+                     </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endfor %}

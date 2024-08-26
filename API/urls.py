@@ -34,7 +34,7 @@ urlpatterns = [
     path('register', login_required(view_pro_users.register), name='register'),
 
     # URL Documentation
-    path('<str:machine>', view_pro_users.documentation, name="documentation"),
+    path('documentation', view_pro_users.documentation, name="documentation"),
 
     # HOME AND DOCUMENTATION API
     path('home/', include(users_urls)),

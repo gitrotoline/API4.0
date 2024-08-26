@@ -1,0 +1,88 @@
+{% extends 'disp/base.html'  %}
+{% load static %}
+{% load i18n %}
+{% block wrapper %}
+
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!--  Barra lateral -->
+    <!-- component -->
+    <nav class="rounded-md w-72 h-screen flex-col justify-between">
+        <aside id="logo-sidebar"  class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0 shadow-xl" aria-label="Sidebar">
+            <div class="h-full px-3 py-1 overflow-y-auto" style="background-color: #00386C">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center mt-2" href="{% url 'home' %}">
+                    <img src="{% static 'img/logo_rotoline.svg' %}" class="img-fluid" alt="Responsive image" width="200" height="120" >
+                </a><br>
+                <hr>
+                <ul class="space-y-2 font-medium mt-4">
+                    <li class="mb-3">
+                        <a href="{% url 'home' %}" class="flex items-center p-2 text-dark  rounded-lg bg-gray-100 group">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" /></svg>
+                            <span class="ms-3">{% trans 'RotoAPI 4.0' %}</span>
+                        </a>
+                    </li>
+                    <li class="mb-3">
+                        <a href="{% url 'token_access' %}" class="flex items-center p-2 text-dark  rounded-lg bg-gray-100 group">
+                            <i class='bx bxs-key' ></i>
+                            <span class="ms-3">{% trans 'Token de Acesso' %}</span>
+                        </a>
+                    </li>
+                    <li class="mb-3">
+                        <a href="{% url 'documentation' %}" target="_blank" class="flex items-center p-2 text-dark  rounded-lg bg-gray-100 group">
+                            <i class='bx bx-book-reader text-xl'></i>
+                            <span class="ms-3">{% trans 'Documentação - API' %}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    </nav>
+
+    <!--Fim da barra lateral -->
+
+    <!-- Wrapper de Conteúdo -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Conteúdo principal -->
+        <div id="" >
+            {% block cabecalho %} {% include 'disp/include/cabecalho.html' %} {% endblock cabecalho %}
+        </div>
+
+        {% block message %} {% include 'disp/include/message.html' %} {% endblock message %}
+
+        <!-- Fim do conteúdo principal -->
+        {% block conteudo %}
+
+        {% endblock conteudo %}
+
+        <!-- Modal -->
+        <div class="modal fade" id="PrivAndTermos" tabindex="-1" role="dialog" aria-labelledby="PrivAndTermosLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title font-weight-normal font-italic text-dark" id="PrivAndTermosLabel">{% trans 'Politíca de Privacidade e Termos' %}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                    {% trans 'O uso desse serviço requer termos e condições que de forma legal, trata seus dados e armazena de forma segura' %},
+                    {% trans 'visando a melhor experiência do usuário, acesse a Política de Privacidade e termos para mais detalhes.' %}
+              </div>
+              <div class="modal-footer">
+                  <a type="button" href="#" class="btn btn-secondary">{% trans 'Ler Termos' %}</a>
+                  <button id="confirmPriv" class="btn btn-primary">{% trans 'Aceitar' %}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+    <!-- End of Page Wrapper -->
+    <!-- End of Content Wrapper -->
+    <!-- Footer -->
+{% block footer %}
+     {% include 'disp/include/footer.html'  %}
+{% endblock footer %}
+{% endblock wrapper %}
